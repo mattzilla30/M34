@@ -66,6 +66,17 @@ public final class MainActivity extends Activity {
     }
     @Override protected void onActivityResult(int request,int result,Intent data) {
         super.onActivityResult(request,result,data);
+        if (request == 42 && result == RESULT_OK && data != null && data.getData() != null) {
+            android.net.Uri destination = data.getData();
+            final LibraryExport snapshot = new LibraryExport(library);
+            remote.transfers.execute(() -> {
+                try (java.io.OutputStream output = getContentResolver().openOutputStream(destination, "wt")) {
+                    if (output == null) throw new java.io.IOException();
+                    output.write(snapshot.encode().getBytes(java.nio.charset.StandardCharsets.UTF_8));
+                    remote.main.post(() -> toast("Library exported. API credentials were excluded. Legacy demo artwork stays in M34."));
+                } catch (Exception error) { remote.main.post(() -> toast("Could not write library export")); }
+            });
+        }
         if(request==41) {unlocking=false;if(result==RESULT_OK){unlocked=true;render();}else finish();}
     }
     void colors() {
@@ -299,6 +310,13 @@ public final class MainActivity extends Activity {
         row(storage,"Image cache","Downloaded files and saves are kept",String.format(Locale.US,"%.1f MB · Clear",remote.cacheSize()/1048576.0),()->{remote.clear();toast("Image cache cleared");render();});
         section("Privacy");LinearLayout privacy=panel();toggle(privacy,"App lock","Require device screen lock on return","lock",false,()->{if(library.flag("lock",false)){unlocked=false;authenticate();}});
         row(privacy,"Clear search history","Remove recent searches from this device","Clear",()->new AlertDialog.Builder(this).setTitle("Clear search history?").setNegativeButton("Cancel",null).setPositiveButton("Clear",(d,w)->{library.putValue("history","[]");toast("Search history cleared");}).show());
+        section("Library transfer");
+        LinearLayout transfer = panel();
+        row(transfer, "Export library to MBooru", "Saved Rule34 artwork, local likes and collections; no API keys. Legacy demo artwork remains in M34.", "Export", () -> {
+            Intent export = new Intent(Intent.ACTION_CREATE_DOCUMENT).addCategory(Intent.CATEGORY_OPENABLE)
+                .setType("application/json").putExtra(Intent.EXTRA_TITLE, "M34-library.json");
+            startActivityForResult(export, 42);
+        });
         section("About");LinearLayout about=panel();row(about,"M34 prototype","Android 17+ · ARM64 only · Native Android",versionLabel(),()->new AlertDialog.Builder(this).setTitle("M34 · "+versionLabel()).setMessage("A working artwork viewer prototype.\n\nM34 connects directly to the Rule34 API using your credentials. Saves, collections and likes are local to this device.\n\nNot affiliated with Rule34. No analytics or ads.").setPositiveButton("Done",null).show());space(body,24);TextView footer=sub("M34  ·  Made for discovery");footer.setGravity(Gravity.CENTER);body.addView(footer);
     }
     void testConnection() {

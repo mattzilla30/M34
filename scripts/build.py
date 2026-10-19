@@ -30,6 +30,7 @@ def main():
     if classes.exists(): shutil.rmtree(classes)
     classes.mkdir()
     native = ROOT/'app/src/main/jniLibs/arm64-v8a/libm34.so'
+    native.parent.mkdir(parents=True, exist_ok=True)
     run(os.environ.get('CC','clang'),'--target=aarch64-linux-android37','-fuse-ld=lld','-nostdlib','-shared','-fPIC','-O2','-Wl,-z,max-page-size=16384','-Wl,-soname,libm34.so',ROOT/'app/src/main/cpp/architecture.c','-o',native)
     run(tools/'aapt2','compile','--dir',ROOT/'app/src/main/res','-o',work/'resources.zip')
     manifest = ROOT/'app/src/main/AndroidManifest.xml'

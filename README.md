@@ -146,3 +146,7 @@ large/background downloads have not been exhaustively tested. Tests establish
 specific behaviors, not that the app or external API is free of all bugs.
 
 Design reference images in `design/` are concept artwork, not runtime screenshots.
+
+## Transfer the local library to MBooru
+
+Settings → Library transfer → Export creates a versioned `M34-library.json` through Android's document picker. In MBooru, open Saved → Import, select the file, review the counts, and confirm. Saved Rule34 metadata, local likes and collection memberships transfer; API credentials never transfer. Reconnect Rule34 in MBooru separately. Legacy demo artwork remains in M34. Unsaved likes whose metadata is unavailable import as unresolved references and can be repaired when that artwork is encountered again. Exporting leaves M34's library unchanged.
