@@ -1,0 +1,5 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.m34.viewer.qa">
+    <uses-sdk android:minSdkVersion="37" android:targetSdkVersion="37" />
+    <application android:label="M34 temporary QA" android:allowBackup="false" />
+    <instrumentation android:name="com.m34.viewer.qa.PhoneInstrumentation" android:targetPackage="com.m34.viewer" android:label="M34 device gesture QA" />
+</manifest>

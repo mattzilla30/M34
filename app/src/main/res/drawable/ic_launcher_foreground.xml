@@ -1,0 +1,12 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android" android:width="108dp" android:height="108dp" android:viewportWidth="108" android:viewportHeight="108">
+    <group android:pivotX="54" android:pivotY="54" android:scaleX="0.84" android:scaleY="0.84">
+        <!-- Oversized, muted 34 sits behind the foreground monogram. -->
+        <group android:pivotY="54" android:scaleY="0.85" android:translateY="-10">
+        <path android:fillColor="#526A43" android:pathData="M25,27H43L51,35V45L46,50L51,55V69L43,77H25V68H39L42,65V59L39,56H31V47H39L42,44V39L39,36H25Z" />
+        <path android:fillColor="#526A43" android:fillType="evenOdd" android:pathData="M67,27H77V55H83V64H77V77H68V64H52V54ZM68,43L60,55H68Z" />
+        </group>
+        <!-- Dark keyline keeps the M distinct where it overlaps the digits. -->
+        <path android:fillColor="#101214" android:strokeColor="#101214" android:strokeWidth="5" android:strokeLineJoin="round" android:pathData="M29,84V50H39L54,65L69,50H79V84H68V66L54,80L40,66V84Z" />
+        <path android:fillColor="#B2FF72" android:pathData="M29,84V50H39L54,65L69,50H79V84H68V66L54,80L40,66V84Z" />
+    </group>
+</vector>

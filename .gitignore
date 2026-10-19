@@ -1,0 +1,9 @@
+/signing-bundle/
+/signing-bundle.zip
+/app/build/
+/dist/
+/.gradle/
+/local.properties
+/app/src/main/jniLibs/**/*.so
+*.jks
+*.keystore
